@@ -25,12 +25,13 @@ void setup() {
 double distance;
 uint16_t baseline;
 
-int8_t running; 
+int8_t running = 0; 
 int8_t nudge; 
 
 uint16_t time = 100; 
 void loop() {
-  
+#if CALIBRATION 
+
   while (analogRead(A7) < 100) {
     ++running; 
   }
@@ -39,11 +40,10 @@ void loop() {
     detectColour(); 
     running = 0; 
   }
-
-#if 0 
+#else 
   nudge = 0;  
 
-  moveForward(mBot); 
+  // moveForward(mBot); 
 
   while (analogRead(A7) < 100) {
     ++running; 
@@ -51,7 +51,7 @@ void loop() {
 
   // Make sure that the thing only runs once you press the button 
   // So that we can control how we release the mBot more easily 
-  if (!running) return; 
+  if (!running) { return; } 
 
   switch (mBot.line.readSensors()) {
     case S1_IN_S2_IN: 
@@ -81,7 +81,7 @@ void loop() {
           break; 
 
         case colours::WHITE: 
-          celebrate(mBot); 
+          // celebrate(mBot); 
           break; 
 
         default: 
@@ -121,11 +121,11 @@ void loop() {
 
   // if within black line, stop motor, detect colour, and take corresponding0
   // action
-  delay(100); 
 
   // else if too near to left wall, nudge right
   // else if too near to right wall, nudge left
   // else move forward 
   LOG(); 
+
 #endif 
 }

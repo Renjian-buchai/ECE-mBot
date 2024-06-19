@@ -19,21 +19,21 @@ void moveForward(mBot& mBot) {  // Code for moving forward for some short interv
 void turnRight(mBot& mBot) {  // Code for turning right 90 deg
   mBot.left.run(-255); 
   mBot.right.run(-255); 
-  delay(336); 
+  delay(200); 
   return; 
 }
 
 void turnLeft(mBot& mBot) {  // Code for turning left 90 deg
   mBot.left.run(255); 
   mBot.right.run(255); 
-  delay(320); 
+  delay(200); 
   return; 
 }
 
 void uTurn(mBot& mBot) {  // Code for u-turn
   mBot.left.run(255); 
   mBot.right.run(255); 
-  delay(620); 
+  delay(450); 
   return; 
 }
 

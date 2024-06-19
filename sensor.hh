@@ -5,6 +5,8 @@
 #include "output.hh"
 #include "mBot.hh"
 
+#define CALIBRATION 0
+
 enum class light { 
   IR = 0b00, 
   BLUE = 0b10,
@@ -97,7 +99,7 @@ colours detectColour() {
 
   Serial.print("green: "); 
   LOG(g); 
-  if (g > 782) {
+  if (g > 730) {
     colour |= colours::GREEN; 
   }
 
@@ -107,6 +109,7 @@ colours detectColour() {
     colour |= colours::BLUE; 
   }
 
+#if CALIBRATION 
   switch (colour) {
     case colours::RED: 
       LOG("RED"); 
@@ -138,6 +141,7 @@ colours detectColour() {
       LOG("Gay!");
       break; 
   }
+#endif 
 
   LOG(); 
 
