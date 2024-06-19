@@ -8,6 +8,7 @@ struct mBot {
   MeDCMotor left; 
   MeDCMotor right; 
   MeBuzzer buzzer; 
+  MeLineFollower line; 
 }; 
 
 #endif 

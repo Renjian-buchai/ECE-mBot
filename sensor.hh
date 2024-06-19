@@ -13,14 +13,14 @@ enum class light {
 }; 
 
 enum class colours : uint8_t {
-  RED       = 0b001, 
+  RED       = 0b100, 
   GREEN     = 0b010, 
-  BLUE      = 0b100,
-  LIGHTBLUE = 0b110, 
-  ORANGE    = 0b011, 
+  BLUE      = 0b001,
+  DARKGREEN = 0b000, 
+  LIGHTBLUE = 0b011, 
+  ORANGE    = 0b110, 
   PURPLE    = 0b101, 
   WHITE     = 0b111, 
-  NONE      = 0b000
 }; 
 
 colours& operator|=(colours& lhs, colours rhs) {
@@ -50,7 +50,7 @@ int16_t readRed() {  // Code for turning on the red LED only
   digitalWrite(A2, HIGH); 
   digitalWrite(A3, HIGH); 
 
-  delay(200); 
+  delay(250); 
   int16_t ret = analogRead(A0); 
   delay(50); 
 
@@ -61,7 +61,7 @@ int16_t readGreen() {  // Code for turning on the green LED only
   digitalWrite(A2,LOW); 
   digitalWrite(A3, HIGH); 
 
-  delay(200); 
+  delay(250); 
   int16_t ret = analogRead(A0);  
   delay(50); 
 
@@ -72,7 +72,7 @@ int16_t readBlue() {
   digitalWrite(A2, HIGH); 
   digitalWrite(A3,LOW); 
 
-  delay(200); 
+  delay(250); 
   int16_t ret = analogRead(A0);
   delay(50); 
   return ret; 
@@ -80,15 +80,65 @@ int16_t readBlue() {
 
 colours detectColour() {
   int16_t r, g, b; 
+  colours colour = colours::DARKGREEN; 
   // Shine Red, read LDR after some delay
   r = readRed(); 
   // Shine Green, read LDR after some delay
   g = readGreen(); 
   // Shine Blue, read LDR after some delay
-  b = readGreen(); 
+  b = readBlue(); 
   // Run algorithm for colour decoding
 
-  return colours::NONE; 
+  LOG(r); 
+  if (r > 750) {
+    colour |= colours::RED; 
+  }
+
+  LOG(g); 
+  if (g > 860) {
+    colour |= colours::GREEN; 
+  }
+
+  LOG(b); 
+  if (b > 920) {
+    colour |= colours::BLUE; 
+  }
+
+  switch (colour) {
+    case colours::RED: 
+      LOG("RED"); 
+      break; 
+
+    case colours::GREEN: [[fallthrough]];
+    case colours::DARKGREEN: 
+      LOG("GREEN"); 
+      break; 
+
+    case colours::BLUE: [[fallthrough]];
+    case colours::LIGHTBLUE: 
+      LOG("BLUE"); 
+      break; 
+
+    case colours::ORANGE:   
+      LOG("ORANGE"); 
+      break; 
+
+    case colours::PURPLE: 
+      LOG("PURPLE"); 
+      break; 
+
+    case colours::WHITE: 
+      LOG("WHITE"); 
+      break; 
+
+    default: 
+      LOG("Gay!");
+      break; 
+  }
+
+  LOG(); 
+
+  return colour; 
 }
 
 #endif 

@@ -19,59 +19,75 @@ void setup() {
   mBot.ultrasonicSensor = MeUltrasonicSensor(PORT_1); 
   mBot.left = MeDCMotor(M1); 
   mBot.right = MeDCMotor(M2); 
+  mBot.line = MeLineFollower(PORT_2); 
 }
 
 double distance;
 uint16_t baseline;
 
 int8_t running; 
+int8_t nudge; 
 
-uint16_t time = 500; 
-void loop() { 
-
+uint16_t time = 100; 
+void loop() {
+  
   while (analogRead(A7) < 100) {
     ++running; 
   }
 
   if (running) {
-    doubleLeftTurn(mBot, time); 
-    stopMotor(mBot);
-
-    time += 20; 
-
+    detectColour(); 
     running = 0; 
   }
 
-  // Read ultrasonic sensing distance (choose an appropriate timeout)
-  distance = mBot.ultrasonicSensor.distanceCm();
+  // nudge = 0;  
 
-  LOG(distance); 
+  // moveForward(mBot); 
 
-  if (distance < 10.0f) {
-    LOG("Turn right"); 
-    nudgeRight(); 
-  }
+  // while (analogRead(A7) < 100) {
+  //   ++running; 
+  // }
 
-  // Read IR sensing distance (turn off IR, read IR detector, turn on IR,
-  // read IR detector, estimate distance)
+  // switch (mBot.line.readSensors()) {
+  //   case S1_IN_S2_IN: 
+  //     stopMotor(mBot); 
+  //     break; 
+    
+  //   default: 
+  //     moveForward(mBot); 
+  //     break; 
+  // }
 
-  distance = readIR(); 
-  LOG(distance);
+  // // Read ultrasonic sensing distance (choose an appropriate timeout)
+  // distance = mBot.ultrasonicSensor.distanceCm(15);
 
-  // Not technically distance, but may as well reuse the variable.
-  if (distance > 300.0f) {  
-    LOG("Turn left"); 
-    nudgeLeft(); 
-  }
+  // LOG(distance); 
 
+  // while (distance < 8.0f) {
+  //   LOG("Turn right"); 
+  //   nudgeRight(mBot);  
+  //   distance = mBot.ultrasonicSensor.distanceCm(15); 
+  // }
 
-  // if within black line, stop motor, detect colour, and take corresponding0
-  // action
+  // // Read IR sensing distance (turn off IR, read IR detector, turn on IR,
+  // // read IR detector, estimate distance)
 
-  delay(100); 
+  // distance = readIR(); 
+  // LOG(distance);
 
-  // else if too near to left wall, nudge right
-  // else if too near to right wall, nudge left
-  // else move forward 
-  LOG(); 
+  // // Not technically distance, but may as well reuse the variable.
+  // while (distance > 250.0f) {  
+  //   LOG("Turn left"); 
+  //   nudgeLeft(mBot); 
+  //   distance = readIR(); 
+  // }
+
+  // // if within black line, stop motor, detect colour, and take corresponding0
+  // // action
+  // delay(100); 
+
+  // // else if too near to left wall, nudge right
+  // // else if too near to right wall, nudge left
+  // // else move forward 
+  // LOG(); 
 }

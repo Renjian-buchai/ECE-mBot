@@ -37,7 +37,7 @@ void uTurn(mBot& mBot, uint16_t time) {  // Code for u-turn
   return; 
 }
 
-void doubleLeftTurn(mBot& mBot, int16_t time) {  // Code for double left turn
+void doubleLeftTurn(mBot& mBot) {  // Code for double left turn
   turnLeft(mBot);
   moveForward(mBot); 
   delay(740); 
@@ -46,16 +46,26 @@ void doubleLeftTurn(mBot& mBot, int16_t time) {  // Code for double left turn
   turnLeft(mBot); 
 }
 
-void doubleRightTurn() {  // Code for double right turn
+void doubleRightTurn(mBot& mBot, uint16_t time) {  // Code for double right turn
+  turnRight(mBot); 
+  moveForward(mBot); 
+  delay(740); 
+  stopMotor(mBot); 
+  delay(150); 
+  turnRight(mBot); 
 }
 
 
-void nudgeLeft() {  // Code for nudging slightly to the left for some short
+void nudgeLeft(mBot& mBot) {  // Code for nudging slightly to the left for some short
                     // interval
+  mBot.left.run(-180); 
+  mBot.right.run(255);  
 }
 
-void nudgeRight() {  // Code for nudging slightly to the right for some short
+void nudgeRight(mBot& mBot) {  // Code for nudging slightly to the right for some short
                      // interval
+  mBot.left.run(-255); 
+  mBot.right.run(200); 
 }
 
 void celebrate(mBot& mBot) {

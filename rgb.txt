@@ -1,0 +1,33 @@
+red: 
+	r = 895 H
+	g = 859 L 
+	b = 830 L
+
+orange: 
+	r = 912 H
+	g = 880 H
+	b = 841 L
+
+purple: 
+	r = 858 H
+	g = 874 L 
+	b = 923 H
+
+lightBlue: 
+	r = 811 L
+	g = 898 L? H
+	b = 940 H
+
+green: 
+	r = 750 L 
+	g = 875 H? L 
+	b = 845 L 
+
+white: 
+	r = 906 H
+	g = 939 H
+	b = 960 H
+
+Red threshold = 830
+Green threshold = 877
+Blue threshold = 880
