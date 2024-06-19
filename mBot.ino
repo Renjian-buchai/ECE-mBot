@@ -40,54 +40,92 @@ void loop() {
     running = 0; 
   }
 
-  // nudge = 0;  
+#if 0 
+  nudge = 0;  
 
-  // moveForward(mBot); 
+  moveForward(mBot); 
 
-  // while (analogRead(A7) < 100) {
-  //   ++running; 
-  // }
+  while (analogRead(A7) < 100) {
+    ++running; 
+  }
 
-  // switch (mBot.line.readSensors()) {
-  //   case S1_IN_S2_IN: 
-  //     stopMotor(mBot); 
-  //     break; 
+  // Make sure that the thing only runs once you press the button 
+  // So that we can control how we release the mBot more easily 
+  if (!running) return; 
+
+  switch (mBot.line.readSensors()) {
+    case S1_IN_S2_IN: 
+      stopMotor(mBot); 
+      delay(100); 
+      switch (detectColour()) {
+        case colours::RED: 
+          turnLeft(mBot); 
+          break; 
+
+        case colours::GREEN: [[fallthrough]];
+        case colours::DARKGREEN: 
+          turnRight(mBot); 
+          break; 
+
+        case colours::BLUE: [[fallthrough]];
+        case colours::LIGHTBLUE: 
+          doubleRightTurn(mBot); 
+          break; 
+
+        case colours::ORANGE:   
+          uTurn(mBot); 
+          break; 
+
+        case colours::PURPLE: 
+          doubleLeftTurn(mBot);  
+          break; 
+
+        case colours::WHITE: 
+          celebrate(mBot); 
+          break; 
+
+        default: 
+          LOG("Gay!");
+          break; 
+      }
+      break; 
     
-  //   default: 
-  //     moveForward(mBot); 
-  //     break; 
-  // }
+    default: 
+      moveForward(mBot); 
+      break; 
+  }
 
-  // // Read ultrasonic sensing distance (choose an appropriate timeout)
-  // distance = mBot.ultrasonicSensor.distanceCm(15);
+  // Read ultrasonic sensing distance (choose an appropriate timeout)
+  distance = mBot.ultrasonicSensor.distanceCm(15);
 
-  // LOG(distance); 
+  LOG(distance); 
 
-  // while (distance < 8.0f) {
-  //   LOG("Turn right"); 
-  //   nudgeRight(mBot);  
-  //   distance = mBot.ultrasonicSensor.distanceCm(15); 
-  // }
+  while (distance < 8.0f) {
+    LOG("Turn right"); 
+    nudgeRight(mBot);  
+    distance = mBot.ultrasonicSensor.distanceCm(15); 
+  }
 
-  // // Read IR sensing distance (turn off IR, read IR detector, turn on IR,
-  // // read IR detector, estimate distance)
+  // Read IR sensing distance (turn off IR, read IR detector, turn on IR,
+  // read IR detector, estimate distance)
 
-  // distance = readIR(); 
-  // LOG(distance);
+  distance = readIR(); 
+  LOG(distance);
 
-  // // Not technically distance, but may as well reuse the variable.
-  // while (distance > 250.0f) {  
-  //   LOG("Turn left"); 
-  //   nudgeLeft(mBot); 
-  //   distance = readIR(); 
-  // }
+  // Not technically distance, but may as well reuse the variable.
+  while (distance > 250.0f) {  
+    LOG("Turn left"); 
+    nudgeLeft(mBot); 
+    distance = readIR(); 
+  }
 
-  // // if within black line, stop motor, detect colour, and take corresponding0
-  // // action
-  // delay(100); 
+  // if within black line, stop motor, detect colour, and take corresponding0
+  // action
+  delay(100); 
 
-  // // else if too near to left wall, nudge right
-  // // else if too near to right wall, nudge left
-  // // else move forward 
-  // LOG(); 
+  // else if too near to left wall, nudge right
+  // else if too near to right wall, nudge left
+  // else move forward 
+  LOG(); 
+#endif 
 }

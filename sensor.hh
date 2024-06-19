@@ -50,7 +50,7 @@ int16_t readRed() {  // Code for turning on the red LED only
   digitalWrite(A2, HIGH); 
   digitalWrite(A3, HIGH); 
 
-  delay(250); 
+  delay(400); 
   int16_t ret = analogRead(A0); 
   delay(50); 
 
@@ -61,7 +61,7 @@ int16_t readGreen() {  // Code for turning on the green LED only
   digitalWrite(A2,LOW); 
   digitalWrite(A3, HIGH); 
 
-  delay(250); 
+  delay(400); 
   int16_t ret = analogRead(A0);  
   delay(50); 
 
@@ -72,7 +72,7 @@ int16_t readBlue() {
   digitalWrite(A2, HIGH); 
   digitalWrite(A3,LOW); 
 
-  delay(250); 
+  delay(400); 
   int16_t ret = analogRead(A0);
   delay(50); 
   return ret; 
@@ -89,18 +89,21 @@ colours detectColour() {
   b = readBlue(); 
   // Run algorithm for colour decoding
 
+  Serial.print("red: "); 
   LOG(r); 
-  if (r > 750) {
+  if (r > 775) {
     colour |= colours::RED; 
   }
 
+  Serial.print("green: "); 
   LOG(g); 
-  if (g > 860) {
+  if (g > 782) {
     colour |= colours::GREEN; 
   }
 
+  Serial.print("blue: "); 
   LOG(b); 
-  if (b > 920) {
+  if (b > 905) {
     colour |= colours::BLUE; 
   }
 

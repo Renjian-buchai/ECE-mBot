@@ -30,7 +30,7 @@ void turnLeft(mBot& mBot) {  // Code for turning left 90 deg
   return; 
 }
 
-void uTurn(mBot& mBot, uint16_t time) {  // Code for u-turn
+void uTurn(mBot& mBot) {  // Code for u-turn
   mBot.left.run(255); 
   mBot.right.run(255); 
   delay(620); 
@@ -46,7 +46,7 @@ void doubleLeftTurn(mBot& mBot) {  // Code for double left turn
   turnLeft(mBot); 
 }
 
-void doubleRightTurn(mBot& mBot, uint16_t time) {  // Code for double right turn
+void doubleRightTurn(mBot& mBot) {  // Code for double right turn
   turnRight(mBot); 
   moveForward(mBot); 
   delay(740); 
