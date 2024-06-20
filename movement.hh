@@ -20,7 +20,7 @@ void moveForward(mBot& mBot) {
 void turnRight(mBot& mBot) {
   mBot.left.run(-255);
   mBot.right.run(-255);
-  delay(300);
+  delay(305);
   return;
 }
 
@@ -45,7 +45,7 @@ void uTurn(mBot& mBot) {
 void doubleLeftTurn(mBot& mBot) {
   turnLeft(mBot);
   moveForward(mBot);
-  delay(740);
+  delay(700);
   stopMotor(mBot);
   delay(100);
   turnLeft(mBot);
@@ -55,7 +55,7 @@ void doubleLeftTurn(mBot& mBot) {
 void doubleRightTurn(mBot& mBot) {
   turnRight(mBot);
   moveForward(mBot);
-  delay(740);
+  delay(720);
   stopMotor(mBot);
   delay(100);
   turnRight(mBot);

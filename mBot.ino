@@ -7,8 +7,8 @@
 
 mBot mBot;
 
-#define TIMEOUT 2000        // Max microseconds to wait; choose according to max distance of wall
-#define SPEED_OF_SOUND 340  // Update according to your own experiment
+#define TIMEOUT 2000
+#define SPEED_OF_SOUND 340
 
 void setup() {
   pinMode(M1, OUTPUT);
@@ -24,19 +24,21 @@ void setup() {
   mBot.right = MeDCMotor(M2);
   mBot.line = MeLineFollower(PORT_2);
   mBot.led = MeRGBLed(0, 30);
-  mBot.led.setpin(13);  
+  mBot.led.setpin(13);
+  mBot.lDRPin = A0;
+  mBot.iRPin = A1;
+  mBot.lightPin0 = A2;
+  mBot.lightPin1 = A3;
 }
 
 double distance;
-uint16_t baseline;
-
 int8_t running = 0;
 
 uint16_t time = 100;
 void loop() {
 #if CALIBRATION
   while (analogRead(A7) < 100) {
-    ++running;
+    running = -1u;
   }
 
   if (running) {
@@ -54,9 +56,9 @@ void loop() {
   if (!running) { return; }
 
   switch (mBot.line.readSensors()) {
-    case S1_IN_S2_IN: [[fallthrough]]
-    case S1_IN_S2_OUT: [[fallthrough]]
-    case S1_OUT_S2_IN: 
+    case S1_IN_S2_IN: [[fallthrough]];
+    case S1_IN_S2_OUT: [[fallthrough]];
+    case S1_OUT_S2_IN:
       stopMotor(mBot);
       delay(100);
 
@@ -84,45 +86,40 @@ void loop() {
           break;
 
         case colours::WHITE:
-          // celebrate(mBot);
-          running = 0; 
-          break;
-
-        default:
-          LOG("Gay!");
+          celebrate(mBot);
+          running = 0;
           break;
       }
       break;
 
     default:
-    stillOnCooldown: 
       // Not technically distance, but may as well reuse the variable.
-      distance = readIR();
+      distance = readIR(mBot);
       LOG("IR distance: ");
       LOG(distance);
 
-      if (distance > 250.0f) {
+      if (distance > 300.0f) {
         LOG("Turn left");
         nudgeLeft(mBot);
-        break; 
+        break;
       }
 
       LOG("US distance: ");
 
-      distance = mBot.ultrasonicSensor.distanceCm(); 
+      distance = mBot.ultrasonicSensor.distanceCm();
 
       LOG(distance);
 
       if (distance < 8.0f) {
         LOG("Turn right");
         nudgeRight(mBot);
-        break; 
+        break;
       }
 
       moveForward(mBot);
       break;
   }
-  
+
   LOG();
 
 #endif

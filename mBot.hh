@@ -10,6 +10,10 @@ struct mBot {
   MeBuzzer buzzer;
   MeLineFollower line;
   MeRGBLed led; 
+  uint8_t lightPin0; 
+  uint8_t lightPin1; 
+  uint8_t iRPin; 
+  uint8_t lDRPin; 
 };
 
 #endif
