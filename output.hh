@@ -1,16 +1,16 @@
 #if !defined(OUTPUT_HH)
 #define OUTPUT_HH
 
-#define DEBUG true
+#define DEBUG 1
 
-#if DEBUG 
+#if DEBUG
 
 #define LOG(x) Serial.println(x)
 
-#else 
+#else
 
 #define LOG(x) (void)0
 
-#endif 
+#endif
 
-#endif 
+#endif

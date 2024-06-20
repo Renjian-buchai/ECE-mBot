@@ -2,74 +2,74 @@
 #define MOVEMENT_HH
 
 #include <MeMCore.h>
-#include "mBot.hh" 
+#include "mBot.hh"
 
 void stopMotor(mBot& mBot) {  // Code for stopping motor
-  mBot.left.run(0); 
-  mBot.right.run(0); 
-  return; 
+  mBot.left.run(0);
+  mBot.right.run(0);
+  return;
 }
 
 void moveForward(mBot& mBot) {  // Code for moving forward for some short interval
-  mBot.left.run(-255); 
+  mBot.left.run(-255);
   mBot.right.run(255);
-  return; 
+  return;
 }
 
 void turnRight(mBot& mBot) {  // Code for turning right 90 deg
-  mBot.left.run(-255); 
-  mBot.right.run(-255); 
-  delay(200); 
-  return; 
+  mBot.left.run(-255);
+  mBot.right.run(-255);
+  delay(200);
+  return;
 }
 
 void turnLeft(mBot& mBot) {  // Code for turning left 90 deg
-  mBot.left.run(255); 
-  mBot.right.run(255); 
-  delay(200); 
-  return; 
+  mBot.left.run(255);
+  mBot.right.run(255);
+  delay(200);
+  return;
 }
 
 void uTurn(mBot& mBot) {  // Code for u-turn
-  mBot.left.run(255); 
-  mBot.right.run(255); 
-  delay(450); 
-  return; 
+  mBot.left.run(255);
+  mBot.right.run(255);
+  delay(450);
+  return;
 }
 
 void doubleLeftTurn(mBot& mBot) {  // Code for double left turn
   turnLeft(mBot);
-  moveForward(mBot); 
-  delay(740); 
-  stopMotor(mBot); 
-  delay(150); 
-  turnLeft(mBot); 
+  moveForward(mBot);
+  delay(740);
+  stopMotor(mBot);
+  delay(150);
+  turnLeft(mBot);
 }
 
 void doubleRightTurn(mBot& mBot) {  // Code for double right turn
-  turnRight(mBot); 
-  moveForward(mBot); 
-  delay(740); 
-  stopMotor(mBot); 
-  delay(150); 
-  turnRight(mBot); 
+  turnRight(mBot);
+  moveForward(mBot);
+  delay(740);
+  stopMotor(mBot);
+  delay(150);
+  turnRight(mBot);
 }
 
 
 void nudgeLeft(mBot& mBot) {  // Code for nudging slightly to the left for some short
-                    // interval
-  mBot.left.run(-180); 
-  mBot.right.run(255);  
+                              // interval
+  mBot.left.run(-180);
+  mBot.right.run(255);
 }
 
 void nudgeRight(mBot& mBot) {  // Code for nudging slightly to the right for some short
-                     // interval
-  mBot.left.run(-255); 
-  mBot.right.run(200); 
+                               // interval
+  mBot.left.run(-255);
+  mBot.right.run(200);
 }
 
 void celebrate(mBot& mBot) {
-  MeBuzzer& buzzer = mBot.buzzer; 
+  MeBuzzer& buzzer = mBot.buzzer;
 
   // Bar 93
   buzzer.tone(466.16, 340);
@@ -80,7 +80,7 @@ void celebrate(mBot& mBot) {
   buzzer.tone(493.88, 80);
   buzzer.tone(554.37, 100);
 
-  // Bar 94 
+  // Bar 94
   buzzer.tone(622.25, 210);
   buzzer.tone(659.25, 150);
   buzzer.tone(554.37, 320);
@@ -110,14 +110,14 @@ void celebrate(mBot& mBot) {
   buzzer.tone(1244.51, 290);
   buzzer.tone(622.25, 230);
 
-  // Bar 97 
+  // Bar 97
   buzzer.tone(554.37, 140);
   buzzer.tone(622.25, 140);
   buzzer.tone(659.25, 140);
   buzzer.tone(622.25, 390);
   buzzer.tone(466.16, 330);
 
-  // Bar 98 
+  // Bar 98
   buzzer.tone(554.37, 120);
   buzzer.tone(622.25, 120);
   buzzer.tone(493.88, 190);
@@ -127,7 +127,7 @@ void celebrate(mBot& mBot) {
   buzzer.tone(554.37, 140);
   buzzer.tone(932.33, 140);
 
-  // Bar 99 
+  // Bar 99
   buzzer.tone(987.77, 140);
   buzzer.tone(329.63, 140);
   buzzer.tone(932.33, 140);
@@ -154,4 +154,4 @@ void celebrate(mBot& mBot) {
   buzzer.noTone();
 }
 
-#endif 
+#endif
