@@ -5,9 +5,10 @@
 #include "output.hh"
 #include "mBot.hh"
 
-#define CALIBRATION 01
+#define CALIBRATION 0
 
-enum class light {
+/// @brief documentation purposes only 
+[[maybe_unused]] enum class lights {
   IR = 0b00,
   BLUE = 0b10,
   GREEN = 0b01,
@@ -25,13 +26,13 @@ enum class colours : uint8_t {
   WHITE = 0b111,
 };
 
-colours& operator|=(colours& lhs, colours rhs) {
+static colours& operator|=(colours& lhs, colours rhs) {
   lhs = static_cast<colours>(static_cast<uint8_t>(lhs) | static_cast<uint8_t>(rhs));
   return lhs;
 }
 
 // If you can't figure out what this is doing without comments, maybe you need a new brain.
-int16_t readIR() {  
+[[nodiscard]] int16_t readIR() {  
   digitalWrite(A2, HIGH);
   digitalWrite(A3, HIGH);
 
@@ -48,7 +49,7 @@ int16_t readIR() {
   return baseline - ret;
 }
 
-int16_t readRed() {  
+[[nodiscard]] int16_t readRed() {  
   digitalWrite(A2, HIGH);
   digitalWrite(A3, HIGH);
 
@@ -59,7 +60,7 @@ int16_t readRed() {
   return ret;
 }
 
-int16_t readGreen() {  
+[[nodiscard]] int16_t readGreen() {  
   digitalWrite(A2, LOW);
   digitalWrite(A3, HIGH);
 
@@ -70,7 +71,7 @@ int16_t readGreen() {
   return ret;
 }
 
-int16_t readBlue() {
+[[nodiscard]] int16_t readBlue() {
   digitalWrite(A2, HIGH);
   digitalWrite(A3, LOW);
 
@@ -80,7 +81,7 @@ int16_t readBlue() {
   return ret;
 }
 
-colours detectColour(mBot& mBot) {
+[[nodiscard]] colours detectColour(mBot& mBot) {
   int16_t r, g, b;
   colours colour = colours::DARKGREEN;
   // Shine Red, read LDR after some delay
@@ -99,7 +100,7 @@ colours detectColour(mBot& mBot) {
 
   // Serial.print("green: ");
   LOG(g);
-  if (g > 750) {
+  if (g > 765) {
     colour |= colours::GREEN;
   }
 
@@ -153,6 +154,22 @@ colours detectColour(mBot& mBot) {
   LOG();
 
   return colour;
+}
+
+double readUltrasonic() {
+  constexpr int ultrasonic = 12; 
+  constexpr int timeout = 2000; 
+  constexpr int speedOfSound = 340; 
+  
+  pinMode(ultrasonic, OUTPUT);
+  digitalWrite(ultrasonic, LOW);
+  delayMicroseconds(2);
+  digitalWrite(ultrasonic, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ultrasonic, LOW);
+
+  pinMode(ultrasonic, INPUT);
+  return pulseIn(ultrasonic, HIGH, timeout) / 2.0 / 1000000 * speedOfSound * 100;
 }
 
 #endif

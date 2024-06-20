@@ -4,70 +4,75 @@
 #include <MeMCore.h>
 #include "mBot.hh"
 
-void stopMotor(mBot& mBot) {  // Code for stopping motor
+void stopMotor(mBot& mBot) {
   mBot.left.run(0);
   mBot.right.run(0);
   return;
 }
 
-void moveForward(mBot& mBot) {  // Code for moving forward for some short interval
+void moveForward(mBot& mBot) {
   mBot.left.run(-255);
   mBot.right.run(255);
   return;
 }
 
-void turnRight(mBot& mBot) {  // Code for turning right 90 deg
+/// @brief green
+void turnRight(mBot& mBot) {
   mBot.left.run(-255);
   mBot.right.run(-255);
-  delay(200);
+  delay(300);
   return;
 }
 
-void turnLeft(mBot& mBot) {  // Code for turning left 90 deg
+
+/// @brief red 
+void turnLeft(mBot& mBot) {
   mBot.left.run(255);
   mBot.right.run(255);
-  delay(200);
+  delay(300);
   return;
 }
 
-void uTurn(mBot& mBot) {  // Code for u-turn
+/// @brief orange
+void uTurn(mBot& mBot) {
   mBot.left.run(255);
   mBot.right.run(255);
-  delay(450);
+  delay(600);
   return;
 }
 
-void doubleLeftTurn(mBot& mBot) {  // Code for double left turn
+/// @brief purple
+void doubleLeftTurn(mBot& mBot) {
   turnLeft(mBot);
   moveForward(mBot);
   delay(740);
   stopMotor(mBot);
-  delay(150);
+  delay(100);
   turnLeft(mBot);
 }
 
-void doubleRightTurn(mBot& mBot) {  // Code for double right turn
+/// @brief blue 
+void doubleRightTurn(mBot& mBot) {
   turnRight(mBot);
   moveForward(mBot);
   delay(740);
   stopMotor(mBot);
-  delay(150);
+  delay(100);
   turnRight(mBot);
 }
 
 
-void nudgeLeft(mBot& mBot) {  // Code for nudging slightly to the left for some short
-                              // interval
+void nudgeLeft(mBot& mBot) {
   mBot.left.run(-180);
   mBot.right.run(255);
 }
 
-void nudgeRight(mBot& mBot) {  // Code for nudging slightly to the right for some short
-                               // interval
+void nudgeRight(mBot& mBot) {
   mBot.left.run(-255);
-  mBot.right.run(200);
+  mBot.right.run(180);
 }
 
+/// @brief white
 void celebrate(mBot& mBot) {
   MeBuzzer& buzzer = mBot.buzzer;
 

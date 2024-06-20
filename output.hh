@@ -1,7 +1,7 @@
 #if !defined(OUTPUT_HH)
 #define OUTPUT_HH
 
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 
